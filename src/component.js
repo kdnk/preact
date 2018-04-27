@@ -1,7 +1,7 @@
-import { FORCE_RENDER } from './constants';
-import { extend } from './util';
-import { renderComponent } from './vdom/component';
-import { enqueueRender } from './render-queue';
+import { FORCE_RENDER } from "./constants";
+import { extend } from "./util";
+import { renderComponent } from "./vdom/component";
+import { enqueueRender } from "./render-queue";
 
 /** Base Component class.
  *	Provides `setState()` and `forceUpdate()`, which trigger rendering.
@@ -33,9 +33,7 @@ export function Component(props, context) {
 	this.state = this.state || {};
 }
 
-
 extend(Component.prototype, {
-
 	/** Returns a `boolean` indicating if the component should re-render when receiving the given `props` and `state`.
 	 *	@param {object} nextProps
 	 *	@param {object} nextState
@@ -45,7 +43,6 @@ extend(Component.prototype, {
 	 *	@function
 	 */
 
-
 	/** Update component state by copying properties from `state` to `this.state`.
 	 *	@param {object} state		A hash of state properties to update with new values
 	 *	@param {function} callback	A function to be called once component state is updated
@@ -53,21 +50,21 @@ extend(Component.prototype, {
 	setState(state, callback) {
 		let s = this.state;
 		if (!this.prevState) this.prevState = extend({}, s);
-		extend(s, typeof state==='function' ? state(s, this.props) : state);
-		if (callback) (this._renderCallbacks = (this._renderCallbacks || [])).push(callback);
+		extend(s, typeof state === "function" ? state(s, this.props) : state);
+		if (callback)
+			(this._renderCallbacks = this._renderCallbacks || []).push(callback);
 		enqueueRender(this);
 	},
-
 
 	/** Immediately perform a synchronous re-render of the component.
 	 *	@param {function} callback		A function to be called after component is re-rendered.
 	 *	@private
 	 */
 	forceUpdate(callback) {
-		if (callback) (this._renderCallbacks = (this._renderCallbacks || [])).push(callback);
+		if (callback)
+			(this._renderCallbacks = this._renderCallbacks || []).push(callback);
 		renderComponent(this, FORCE_RENDER);
 	},
-
 
 	/** Accepts `props` and `state`, and returns a new Virtual DOM tree to build.
 	 *	Virtual DOM is generally constructed via [JSX](http://jasonformat.com/wtf-is-jsx).
@@ -77,5 +74,4 @@ extend(Component.prototype, {
 	 *	@returns VNode
 	 */
 	render() {}
-
 });

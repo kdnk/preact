@@ -52,7 +52,8 @@ declare namespace preact {
 		key?: Key | null;
 	}
 
-	type RenderableProps<P> = Readonly<P> & Readonly<{ children?: ComponentChildren }>;
+	type RenderableProps<P> = Readonly<P> &
+		Readonly<{ children?: ComponentChildren }>;
 
 	interface FunctionalComponent<P = {}> {
 		(props: RenderableProps<P>, context?: any): VNode<any> | null;
@@ -69,15 +70,27 @@ declare namespace preact {
 	// Type alias for a component considered generally, whether stateless or stateful.
 	type AnyComponent<P = {}, S = {}> = FunctionalComponent<P> | Component<P, S>;
 
-	interface Component<P = {}, S = {}> {
+	interface Component<P = {}, S = {}> {
 		componentWillMount?(): void;
 		componentDidMount?(): void;
 		componentWillUnmount?(): void;
 		getChildContext?(): object;
 		componentWillReceiveProps?(nextProps: Readonly<P>, nextContext: any): void;
-		shouldComponentUpdate?(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean;
-		componentWillUpdate?(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): void;
-		componentDidUpdate?(previousProps: Readonly<P>, previousState: Readonly<S>, previousContext: any): void;
+		shouldComponentUpdate?(
+			nextProps: Readonly<P>,
+			nextState: Readonly<S>,
+			nextContext: any
+		): boolean;
+		componentWillUpdate?(
+			nextProps: Readonly<P>,
+			nextState: Readonly<S>,
+			nextContext: any
+		): void;
+		componentDidUpdate?(
+			previousProps: Readonly<P>,
+			previousState: Readonly<S>,
+			previousContext: any
+		): void;
 	}
 
 	abstract class Component<P, S> {
@@ -92,11 +105,18 @@ declare namespace preact {
 		base?: HTMLElement;
 
 		setState<K extends keyof S>(state: Pick<S, K>, callback?: () => void): void;
-		setState<K extends keyof S>(fn: (prevState: S, props: P) => Pick<S, K>, callback?: () => void): void;
+		setState<K extends keyof S>(
+			fn: (prevState: S, props: P) => Pick<S, K>,
+			callback?: () => void
+		): void;
 
 		forceUpdate(callback?: () => void): void;
 
-		abstract render(props?: RenderableProps<P>, state?: Readonly<S>, context?: any): JSX.Element | null;
+		abstract render(
+			props?: RenderableProps<P>,
+			state?: Readonly<S>,
+			context?: any
+		): JSX.Element | null;
 	}
 
 	function h<P>(
@@ -110,7 +130,11 @@ declare namespace preact {
 		...children: (ComponentChild | ComponentChildren)[]
 	): VNode<any>;
 
-	function render(node: ComponentChild, parent: Element | Document, mergeWith?: Element): Element;
+	function render(
+		node: ComponentChild,
+		parent: Element | Document,
+		mergeWith?: Element
+	): Element;
 	function rerender(): void;
 	function cloneElement(element: JSX.Element, props: any): JSX.Element;
 
@@ -129,11 +153,9 @@ declare module "preact/devtools" {
 
 declare global {
 	namespace JSX {
-		interface Element extends preact.VNode<any> {
-		}
+		interface Element extends preact.VNode<any> {}
 
-		interface ElementClass extends preact.Component<any, any> {
-		}
+		interface ElementClass extends preact.Component<any, any> {}
 
 		interface ElementAttributesProperty {
 			props: any;
@@ -143,7 +165,20 @@ declare global {
 			accentHeight?: number | string;
 			accumulate?: "none" | "sum";
 			additive?: "replace" | "sum";
-			alignmentBaseline?: "auto" | "baseline" | "before-edge" | "text-before-edge" | "middle" | "central" | "after-edge" | "text-after-edge" | "ideographic" | "alphabetic" | "hanging" | "mathematical" | "inherit";
+			alignmentBaseline?:
+				| "auto"
+				| "baseline"
+				| "before-edge"
+				| "text-before-edge"
+				| "middle"
+				| "central"
+				| "after-edge"
+				| "text-after-edge"
+				| "ideographic"
+				| "alphabetic"
+				| "hanging"
+				| "mathematical"
+				| "inherit";
 			allowReorder?: "no" | "yes";
 			alphabetic?: number | string;
 			amplitude?: number | string;
@@ -499,7 +534,9 @@ declare global {
 			onTransitionEnd?: TransitionEventHandler;
 		}
 
-		interface HTMLAttributes extends preact.PreactHTMLAttributes, DOMAttributes {
+		interface HTMLAttributes
+			extends preact.PreactHTMLAttributes,
+				DOMAttributes {
 			// Standard HTML Attributes
 			accept?: string;
 			acceptCharset?: string;
@@ -746,7 +783,7 @@ declare global {
 			track: HTMLAttributes;
 			u: HTMLAttributes;
 			ul: HTMLAttributes;
-			"var": HTMLAttributes;
+			var: HTMLAttributes;
 			video: HTMLAttributes;
 			wbr: HTMLAttributes;
 

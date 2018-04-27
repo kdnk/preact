@@ -137,5 +137,8 @@
       "path": "./dist/preact.min.js",
       "threshold": "4Kb"
     }
-  ]
+  ],
+  "dependencies": {
+    "prettier": "^1.12.1"
+  }
 }

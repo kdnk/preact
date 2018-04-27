@@ -1,5 +1,4 @@
-import { extend } from '../util';
-
+import { extend } from "../util";
 
 /**
  * Check if two nodes are equivalent.
@@ -10,15 +9,14 @@ import { extend } from '../util';
  * @private
  */
 export function isSameNodeType(node, vnode, hydrating) {
-	if (typeof vnode==='string' || typeof vnode==='number') {
-		return node.splitText!==undefined;
+	if (typeof vnode === "string" || typeof vnode === "number") {
+		return node.splitText !== undefined;
 	}
-	if (typeof vnode.nodeName==='string') {
+	if (typeof vnode.nodeName === "string") {
 		return !node._componentConstructor && isNamedNode(node, vnode.nodeName);
 	}
-	return hydrating || node._componentConstructor===vnode.nodeName;
+	return hydrating || node._componentConstructor === vnode.nodeName;
 }
-
 
 /**
  * Check if an Element has a given nodeName, case-insensitively.
@@ -27,9 +25,11 @@ export function isSameNodeType(node, vnode, hydrating) {
  * @param {String} nodeName	Unnormalized name to compare against.
  */
 export function isNamedNode(node, nodeName) {
-	return node.normalizedNodeName===nodeName || node.nodeName.toLowerCase()===nodeName.toLowerCase();
+	return (
+		node.normalizedNodeName === nodeName ||
+		node.nodeName.toLowerCase() === nodeName.toLowerCase()
+	);
 }
-
 
 /**
  * Reconstruct Component-style `props` from a VNode.
@@ -44,9 +44,9 @@ export function getNodeProps(vnode) {
 	props.children = vnode.children;
 
 	let defaultProps = vnode.nodeName.defaultProps;
-	if (defaultProps!==undefined) {
+	if (defaultProps !== undefined) {
 		for (let i in defaultProps) {
-			if (props[i]===undefined) {
+			if (props[i] === undefined) {
 				props[i] = defaultProps[i];
 			}
 		}
